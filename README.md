@@ -1,6 +1,8 @@
 # turbo-giggle
 В этом проекте будет отборная солянка из технологий для их закрепления.
-
+<p align="center">
+   <img src="https://pbs.twimg.com/media/ES0MiVVXkAE_v-f?format=jpg&name=small" width="400" alt="Kek" />
+</p>
 ## Цель
 
 Научиться/разобраться/закрепить технологию для дальнейшего ее использования.
