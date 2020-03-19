@@ -17,6 +17,7 @@
 + засунуть все это в докер
 
 ### Полезные ссылки 
+https://strapi.io/blog/build-a-blog-with-react-strapi-and-apollo
  https://www.leighhalliday.com/generating-types-apollo
  https://github.com/apollographql/apollo-tooling#apollo-clientcodegen-output
  https://medium.com/open-graphql/automatically-generate-typescript-definitions-for-graphql-queries-with-apollo-codegen-e73eae72b561
