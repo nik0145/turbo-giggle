@@ -1,7 +1,13 @@
 import React from "react";  
 import { useQuery } from "@apollo/react-hooks";
+//я починю это правда...
+interface T {
+  children: any;
+  query: any;
+  id: any;
+}
 
-const Query = ({ children, query, id }) => {  
+const Query = ({ children, query, id }: T) => {
   const { data, loading, error } = useQuery(query, {
     variables: { id: id }
   });

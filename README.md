@@ -17,11 +17,11 @@
 + засунуть все это в докер
 
 ### Полезные ссылки 
-https://strapi.io/blog/build-a-blog-with-react-strapi-and-apollo
- https://www.leighhalliday.com/generating-types-apollo
- https://github.com/apollographql/apollo-tooling#apollo-clientcodegen-output
- https://medium.com/open-graphql/automatically-generate-typescript-definitions-for-graphql-queries-with-apollo-codegen-e73eae72b561
- https://atheros.ai/blog/generate-javascript-static-types-from-graphql-typescript-and-flow
+ - https://strapi.io/blog/build-a-blog-with-react-strapi-and-apollo
+ - https://www.leighhalliday.com/generating-types-apollo
+ - https://github.com/apollographql/apollo-tooling#apollo-clientcodegen-output
+ - https://medium.com/open-graphql/automatically-generate-typescript-definitions-for-graphql-queries-with-apollo-codegen-e73eae72b561
+ - https://atheros.ai/blog/generate-javascript-static-types-from-graphql-typescript-and-flow
 ### команды для типов
 yarn run apollo schema:download --endpoint=http://localhost:1337/graphql schema.json
  yarn run apollo codegen:generate --localSchemaFile=schema.json --target=typescript --includes=src/**/*.ts --tagName=gql --addTypename --globalTypesFile=src/types/graphql-global-types.ts types
