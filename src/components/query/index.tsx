@@ -1,3 +1,4 @@
+//! оставляем до лучших дней
 import React from "react";  
 import { useQuery } from "@apollo/react-hooks";
 //я починю это правда...

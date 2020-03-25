@@ -32,6 +32,7 @@ yarn run apollo codegen:generate --includes=src/**/*.graphql --localSchemaFile=s
 yarn run apollo codegen:generate introspect-schema http://localhost:1337/graphql --output schema.json
  yarn run apollo schema:download --endpoint=http://localhost:1337/graphql graphql-schema.json
  yarn run apollo codegen:generate --localSchemaFile=schema.json --target=typescript --includes=src/**/*.ts --tagName=gql --addTypename --globalTypesFile=src/types/graphql-global-types.ts types
+ https://www.youtube.com/watch?v=ZYhKsX9Alic
 ## Краткое содержание
 
 Нужно создать приложение задачник с несколькими ролями доступа.
