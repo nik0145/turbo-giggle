@@ -1,42 +1,33 @@
 import React from "react";
-import gql from "graphql-tag";
 import { useQuery } from "@apollo/react-hooks";
+import ArticleQuery from "../queries/ArticleQuery";
+import { kek } from "../queries/types/kek";
 export interface propsType {
   compiler: String;
   framework: String;
 }
-// interface RocketInventory {
-//   id: number;
-//   model: string;
-//   year: number;
-//   stock: number;
-// }
 
-// interface RocketInventoryData {
-//   rocketInventory: RocketInventory[];
-// }
-
-// interface RocketInventoryVars {
-//   year: number;
-// }
-// const GET_ROCKET_INVENTORY = gql`
-//   query getRocketInventory($year: Int!) {
-//     rocketInventory(year: $year) {
-//       id
-//       model
-//       year
-//       stock
-//     }
-//   }
-// `;
-// const { loading, data } = useQuery<RocketInventoryData, RocketInventoryVars>(
-//   GET_ROCKET_INVENTORY,
-//   { variables: { year: 2019 } }
-// );
-console.log(data);
-console.log(loading);
-export const Hello = (props: propsType) => (
-  <h1>
-    Hello from {props.compiler} and {props.framework}
-  </h1>
-);
+export default function Hello(props: propsType) {
+  const { loading, data, error } = useQuery<kek>(ArticleQuery);
+  if (loading) return <div>Loading</div>;
+  if (error) return <h1>ERROR</h1>;
+  if (!data) return <div>no data</div>;
+  return (
+    <div>
+      <h1>
+        {data &&
+          data.articles &&
+          data.articles.map(
+            article =>
+              article && (
+                <div key={article.id}>
+                  <h2>{article.title}</h2>
+                  <p>{article.author?.username}</p>
+                </div>
+              )
+          )}
+        Hello ssda {props.compiler} and {props.framework}
+      </h1>
+    </div>
+  );
+}

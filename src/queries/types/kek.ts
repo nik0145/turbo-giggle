@@ -7,21 +7,21 @@
 // GraphQL query operation: kek
 // ====================================================
 
-export interface kek_article_author {
+export interface kek_articles_author {
   __typename: "UsersPermissionsUser";
   id: string;
   email: string;
   username: string;
 }
 
-export interface kek_article {
+export interface kek_articles {
   __typename: "Article";
   id: string;
   title: string | null;
   content: string | null;
-  author: kek_article_author | null;
+  author: kek_articles_author | null;
 }
 
 export interface kek {
-  article: kek_article | null;
+  articles: (kek_articles | null)[] | null;
 }
