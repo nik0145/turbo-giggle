@@ -1,16 +1,22 @@
-@import '~antd/dist/antd.css';
+@import "~antd/dist/antd.css";
 .logo {
   height: 32px;
   background: rgba(255, 255, 255, 0.2);
   margin: 16px;
+  font-size: large;
+  color: #ffffffe0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-align: center;
 }
 
 .site-layout .site-layout-background {
   background: #fff;
 }
-  [data-theme="dark"] .site-layout .site-layout-background {
-    background: #141414;
-  }
+[data-theme="dark"] .site-layout .site-layout-background {
+  background: #141414;
+}
 
 #components-layout-demo-side .logo {
   height: 32px;

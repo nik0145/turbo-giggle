@@ -29,7 +29,9 @@ class SiderDemo extends React.Component {
           collapsed={this.state.collapsed}
           onCollapse={this.onCollapse}
         >
-          <div className="logo" />
+          <div className="logo">
+            turbo-giggle
+          </div>
           <Menu theme="dark" defaultSelectedKeys={["1"]} mode="inline">
             {/* сделать нормальный роутинг чек ридми */}
             <Menu.Item key="1">
