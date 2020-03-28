@@ -15,7 +15,7 @@
 + сделать тему и настроить babel https://ant.design/docs/react/use-in-typescript
 + настроить webpack
 + засунуть все это в докер
-
++ сделать  layout и  роутинг нормальный в папочке как в ссылке https://pro.ant.design/docs/router-and-nav
 ### Полезные ссылки 
  - https://strapi.io/blog/build-a-blog-with-react-strapi-and-apollo
  - https://www.leighhalliday.com/generating-types-apollo
