@@ -1,34 +1,22 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 import { Layout, Menu } from "antd";
 import {  Link } from "react-router-dom";
 import { PieChartOutlined } from "@ant-design/icons";
 import { Route } from "react-router-dom";
 const { Header, Content, Footer, Sider } = Layout;
 export interface propsType {
-  path: String;
+  path: string;
   component: any;
 }
-class BasicLayout extends Component<propsType> {
-  state = {
-    collapsed: false
-  };
+const BasicLayout = ({ component: Component, ...rest }: propsType) => {
+  const [collapsed, setCollapsed] = useState(false);
 
-  onCollapse = (collapsed: boolean): void => {
-    console.log(collapsed);
-    this.setState({ collapsed });
-  };
-
-  render() {
-    return (
+  return (
       <Route
-        {...this.props}
-        render={matchprops => (
+        {...rest}
+        render={matchProps => (
           <Layout style={{ minHeight: "100vh" }}>
-            <Sider
-              collapsible
-              collapsed={this.state.collapsed}
-              onCollapse={this.onCollapse}
-            >
+            <Sider collapsible collapsed={collapsed} onCollapse={setCollapsed}>
               <div className="logo">turbo-giggle</div>
               <Menu theme="dark" defaultSelectedKeys={["1"]} mode="inline">
                 {/* сделать нормальный роутинг чек ридми */}
@@ -54,7 +42,7 @@ class BasicLayout extends Component<propsType> {
                   className="site-layout-background"
                   style={{ padding: 24, minHeight: 360 }}
                 >
-                  {this.props.children}
+               asd   <Component {...matchProps} />
                 </div>
               </Content>
               <Footer style={{ textAlign: "center" }}>
@@ -64,8 +52,7 @@ class BasicLayout extends Component<propsType> {
           </Layout>
         )}
       />
-    );
-  }
-}
+  );
+};
 
 export default BasicLayout;

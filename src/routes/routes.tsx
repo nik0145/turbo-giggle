@@ -6,21 +6,26 @@ const routes = [
       {
         name: "Home",
         path: "/",
-        component: "../components/Home"
-      }
-    ]
-  },
-  {
-    path: "/",
-    component: "../layouts/BasicLayout",
-    routes: [
+        component: () => import("../components/Home")
+      },
       {
         name: "Hello",
         path: "/hello",
-        component: "../components/Hello"
+        component: () => import("../components/Hello")
       }
     ]
   }
+  // {
+  //   path: "/",
+  //   component: "../layouts/BasicLayout",
+  //   routes: [
+  //     {
+  //       name: "Hello",
+  //       path: "/hello",
+  //       component: "../components/Hello"
+  //     }
+  //   ]
+  // }
   //   {
   //     path: "/user",
   //     component: "../layouts/UserLayout",
