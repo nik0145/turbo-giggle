@@ -1,17 +1,22 @@
+import BasicLayout from "../layouts/BasicLayout";
+import Home from "../components/Home";
+import Hello from "../components/Hello";
+
 const routes = [
   {
     path: "/",
-    component: "../layouts/BasicLayout",
+    name: "BasicLayout",
+    component: BasicLayout,
     routes: [
       {
         name: "Home",
         path: "/",
-        component: () => import("../components/Home")
+        component: Home
       },
       {
         name: "Hello",
         path: "/hello",
-        component: () => import("../components/Hello")
+        component: Hello
       }
     ]
   }

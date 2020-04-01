@@ -12,9 +12,10 @@ const BasicLayout = ({ component: Component, ...rest }: propsType) => {
   const [collapsed, setCollapsed] = useState(false);
 
   return (
-      <Route
-        {...rest}
-        render={matchProps => (
+    <Route
+      {...rest}
+      render={matchProps =>
+        matchProps ? (
           <Layout style={{ minHeight: "100vh" }}>
             <Sider collapsible collapsed={collapsed} onCollapse={setCollapsed}>
               <div className="logo">turbo-giggle</div>
@@ -42,7 +43,8 @@ const BasicLayout = ({ component: Component, ...rest }: propsType) => {
                   className="site-layout-background"
                   style={{ padding: 24, minHeight: 360 }}
                 >
-               asd   <Component {...matchProps} />
+                  {JSON.stringify(matchProps)}
+                  {/*  <Component {...matchProps} /> */}
                 </div>
               </Content>
               <Footer style={{ textAlign: "center" }}>
@@ -50,8 +52,9 @@ const BasicLayout = ({ component: Component, ...rest }: propsType) => {
               </Footer>
             </Layout>
           </Layout>
-        )}
-      />
+        ) : null
+      }
+    />
   );
 };
 
