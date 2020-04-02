@@ -1,25 +1,56 @@
-import React from "react";
+import React, { Suspense } from "react";
 // import { Button } from "antd";
 import "./App.css";
 /** Layouts **/
 
 // import BasicLayout from "./layouts/BasicLayout";
-import UserLayout from "./layouts/UserLayout";
+// import UserLayout from "./layouts/UserLayout";
 
-import Hello from "./components/Hello";
-import Home from "./components/Home";
-import UserPage from "./pages/UserPage";
+// import Hello from "./components/Hello";
+// import UserPage from "./pages/UserPage";
 import {
   BrowserRouter as Router,
   Route,
-  Redirect,
+  // Redirect,
   Switch
 } from "react-router-dom";
 import routes from "./routes/routes";
+
+ // !TODO сделать по этому видосу https://habr.com/ru/post/358124/
+
 //  https://www.c-sharpcorner.com/article/multiple-layout-in-react-with-react-router-v4/
-console.log(routes);
+export interface propsType {
+  path?: string;
+  component: any;
+  layout: any;
+  key: any;
+  children?: any;
+}
+// function RouteWrapper({ component: Component, layout: Layout, ...rest }:propsType) {
+//   return (
+//         <Layout {...rest}>
+//           <Component {...rest} />
+//         </Layout>
+//   );
+// }
+function RouteWrapper({
+  component: Component,
+  layout: Layout,
+  ...rest
+}: propsType) {
+  return (
+    <Route
+      {...rest}
+      render={props => (
+        <Layout {...props}>
+          <Component {...props} />
+        </Layout>
+      )}
+    />
+  );
+}
 //  <Route path="/user" render={props => <UserLayout {...props} />} />
-// <Route path="/" render={props => <BasicLayout {...props} />} />
+// <RouteWrapper path="/" render={props => <BasicLayout {...props} />} />
 //https://habr.com/ru/post/358124/
 //https://medium.com/@vvladislavv/%D1%80%D0%B0%D0%B7%D0%B4%D0%B5%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5-%D0%BA%D0%BE%D0%B4%D0%B0-%D1%81-react-%D0%B8-react-router-a3fc72a2430c
 //https://medium.com/javascript-in-plain-english/simple-guide-for-layouts-in-react-router-e32b26c12cee
@@ -29,35 +60,40 @@ class SiderDemo extends React.Component {
   render() {
     return (
       <Router>
-        <Switch>
-          {routes.map(route => (
-            <Route
-              key={route.path}
-              path={route.path}
-              component={route.component}
-            >
-              {route.routes.map(routeInner => (
-                <Route
-                  key={routeInner.path}
-                  path={routeInner.path}
-                  component={routeInner.component}
-                />
-              ))}
-            </Route>
-          ))}
-          {/*   {routes[0].routes.map(route => (
+        <Suspense fallback={<div>Загрузка...</div>}>
+          <Switch>
+            {routes.map(layout => (
+              layout.routes.map(page => (
+                <RouteWrapper key={page.name} component={page} layout={layout} />
+              ))
+        /*       <RouteWrapper key={route.path} {...route}>
+                {route.routes.map((routeInner, index) => (
+                  <Route
+                    key={index}
+                    {...routeInner}
+                    render={matchProps => (
+                      <RouteWrapper
+                        key={index + 1}
+                        {...routeInner}
+                        component={routeInner.component}
+                      />
+                    )}
+                  />
+                ))}
+              </RouteWrapper> */
+            ))}
+            {/*   {routes[0].routes.map(route => (
             <BasicLayout
               key={route.path}
               path={route.path}
               component={route.component}
             ></BasicLayout>
           ))} */}
-          {/*   <Route exact path="/">
+            {/*   <Route exact path="/">
             <BasicLayout path="/" component={Home}></BasicLayout>
           </Route>*/}
-          <UserLayout path="/asd" component={Hello}></UserLayout>
-          <UserLayout path="/asasdd" component={UserPage}></UserLayout>
-        </Switch>
+          </Switch>
+        </Suspense>
       </Router>
     );
   }

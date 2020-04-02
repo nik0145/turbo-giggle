@@ -1,22 +1,19 @@
-import BasicLayout from "../layouts/BasicLayout";
-import Home from "../components/Home";
-import Hello from "../components/Hello";
-
+import  {lazy} from "react";
 const routes = [
   {
     path: "/",
     name: "BasicLayout",
-    component: BasicLayout,
+    component: lazy(() => import("../layouts/BasicLayout")),
     routes: [
       {
         name: "Home",
         path: "/",
-        component: Home
+        component: lazy(() => import("../components/Home"))
       },
       {
         name: "Hello",
         path: "/hello",
-        component: Hello
+        component: lazy(() => import("../components/Hello"))
       }
     ]
   }
