@@ -1,16 +1,27 @@
 import React, { useState } from "react";
 import { Layout, Menu } from "antd";
-import {  Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { PieChartOutlined } from "@ant-design/icons";
-import { Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  // Redirect,
+  Switch,
+} from "react-router-dom";
 const { Header, Content, Footer, Sider } = Layout;
+// !решил блин выучить typescript
 export interface propsType {
   path: string;
   component: any;
-  children?:any;
-  render:any;
+  children?: any;
+  routes: {
+    name: string;
+    path: string;
+    component:any;
+  }[];
 }
-const BasicLayout = ({ component: Component, ...rest }: propsType) => {
+
+const BasicLayout = ({ component: Component, routes, ...rest }: propsType) => {
   const [collapsed, setCollapsed] = useState(false);
 
   return (
@@ -41,7 +52,14 @@ const BasicLayout = ({ component: Component, ...rest }: propsType) => {
                 className="site-layout-background"
                 style={{ padding: 24, minHeight: 360 }}
               >
-                {/* asd <Component {...matchProps} /> */}
+                  <Switch>
+                        {routes.map((route, i) =>
+                          route ? (
+                            <route.component exact key={i} {...route} />
+                          ) : null
+                        )}
+                  </Switch>
+                {/* <Component {...matchProps} /> */}
               </div>
             </Content>
             <Footer style={{ textAlign: "center" }}>

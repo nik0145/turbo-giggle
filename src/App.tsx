@@ -19,6 +19,7 @@ import routes from "./routes/routes";
  // !TODO сделать по этому видосу https://habr.com/ru/post/358124/
 
 //  https://www.c-sharpcorner.com/article/multiple-layout-in-react-with-react-router-v4/
+// !решил блин выучить typescript
 export interface propsType {
   path?: string;
   component: any;
@@ -66,8 +67,8 @@ class SiderDemo extends React.Component {
             {routes.map((route, i) => (
               <route.component
                 key={i}
+               
                 {...route}
-                render={route.component}
               ></route.component>
             ))}
           </Switch>
