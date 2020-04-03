@@ -33,65 +33,43 @@ export interface propsType {
 //         </Layout>
 //   );
 // }
-function RouteWrapper({
-  component: Component,
-  layout: Layout,
-  ...rest
-}: propsType) {
-  return (
-    <Route
-      {...rest}
-      render={props => (
-        <Layout {...props}>
-          <Component {...props} />
-        </Layout>
-      )}
-    />
-  );
-}
-//  <Route path="/user" render={props => <UserLayout {...props} />} />
+// function RouteWrapper({
+//   component: Component,
+//   layout: Layout,
+//   ...rest
+// }: propsType) {
+//   return (
+//     <Route
+//       {...rest}
+//       render={props => (
+//         <Layout {...props}>
+//           <Component {...props} />
+//         </Layout>
+//       )}
+//     />
+//   );
+// }
+//  < path="/user" render={props => <UserLayout {...props} />} />
 // <RouteWrapper path="/" render={props => <BasicLayout {...props} />} />
 //https://habr.com/ru/post/358124/
 //https://medium.com/@vvladislavv/%D1%80%D0%B0%D0%B7%D0%B4%D0%B5%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5-%D0%BA%D0%BE%D0%B4%D0%B0-%D1%81-react-%D0%B8-react-router-a3fc72a2430c
 //https://medium.com/javascript-in-plain-english/simple-guide-for-layouts-in-react-router-e32b26c12cee
 //https://tylermcginnis.com/react-router-route-config/
 //https://www.youtube.com/watch?v=aeK8kS-goIA&list=PLqrUy7kON1mfJ1cQfJJ1FiULLNngvlFTD&index=12
+
 class SiderDemo extends React.Component {
   render() {
     return (
       <Router>
         <Suspense fallback={<div>Загрузка...</div>}>
           <Switch>
-            {routes.map(layout => (
-              layout.routes.map(page => (
-                <RouteWrapper key={page.name} component={page} layout={layout} />
-              ))
-        /*       <RouteWrapper key={route.path} {...route}>
-                {route.routes.map((routeInner, index) => (
-                  <Route
-                    key={index}
-                    {...routeInner}
-                    render={matchProps => (
-                      <RouteWrapper
-                        key={index + 1}
-                        {...routeInner}
-                        component={routeInner.component}
-                      />
-                    )}
-                  />
-                ))}
-              </RouteWrapper> */
+            {routes.map((route, i) => (
+              <route.component
+                key={i}
+                {...route}
+                render={route.component}
+              ></route.component>
             ))}
-            {/*   {routes[0].routes.map(route => (
-            <BasicLayout
-              key={route.path}
-              path={route.path}
-              component={route.component}
-            ></BasicLayout>
-          ))} */}
-            {/*   <Route exact path="/">
-            <BasicLayout path="/" component={Home}></BasicLayout>
-          </Route>*/}
           </Switch>
         </Suspense>
       </Router>
