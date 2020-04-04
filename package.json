@@ -13,25 +13,27 @@
     "@types/react": "^16.9.23",
     "@types/react-dom": "^16.9.5",
     "@types/react-router-dom": "^5.1.3",
+    "@types/yup": "^0.26.34",
     "antd": "^4.0.3",
-    "apollo-boost": "^0.4.7",
     "apollo": "^2.8.3",
+    "apollo-boost": "^0.4.7",
+    "formik": "^2.1.4",
     "graphql": "^14.6.0",
     "react": "^16.13.0",
     "react-dom": "^16.13.0",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.4.0",
-    "typescript": "^3.8.3"
+    "typescript": "^3.8.3",
+    "yup": "^0.28.3"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "generate:type":"apollo codegen:generate --localSchemaFile=schema.json --target=typescript --includes=src/**/*.ts --tagName=gql --addTypename --globalTypesFile=src/types/graphql-global-types.ts types",
+    "generate:type": "apollo codegen:generate --localSchemaFile=schema.json --target=typescript --includes=src/**/*.ts --tagName=gql --addTypename --globalTypesFile=src/types/graphql-global-types.ts types",
     "types:generate": "apollo codegen:generate --target typescript --excludes=node_modules/* --includes=**/*.tsx --endpoint http://localhost:1337/graphql --tagName=gql --outputFlat src/generated",
     "schema:download": "apollo schema:download --endpoint https://graphql.myshopify.com/api/graphql"
-    
   },
   "eslintConfig": {
     "extends": "react-app"

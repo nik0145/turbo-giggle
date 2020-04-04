@@ -27,7 +27,7 @@
 - [x] сделать  layout [вот](https://v1.pro.ant.design/docs/router-and-nav) и  роутинг нормальный в папочке как в ссылке [ant.design](https://pro.ant.design/docs/router-and-nav).
 
 ### Полезные ссылки 
--  https://codesandbox.io/
+ - https://codesandbox.io/
  - https://strapi.io/blog/build-a-blog-with-react-strapi-and-apollo
  - https://www.leighhalliday.com/generating-types-apollo
  - https://github.com/apollographql/apollo-tooling#apollo-clientcodegen-output

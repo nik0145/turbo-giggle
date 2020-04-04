@@ -33,23 +33,26 @@ class SiderDemo extends React.Component {
   render() {
     return (
       <Router>
-      {/*    <ul>
-           <li>
-             <Link to="/user/login">user</Link>
-           </li>
-           <li>
-             <Link to="/hello">hello</Link>
-           </li>
-           <li>
-             <Link to="/">/</Link>
-           </li>
-           <li>
-             <Link to="/home">home</Link>
-           </li>
-         </ul> */}
+        {/* <ul>
+          <li>
+            <Link to="/user/login">user</Link>
+          </li>
+          <li>
+            <Link to="/user/auth">auth</Link>
+          </li>
+          <li>
+            <Link to="/hello">hello</Link>
+          </li>
+          <li>
+            <Link to="/">/</Link>
+          </li>
+          <li>
+            <Link to="/home">home</Link>
+          </li>
+        </ul> */}
 
         <Switch>
-          {routes.map(route => (
+          {routes.map((route) => (
             <RouteSubWrapper key={route.name} {...route} />
           ))}
         </Switch>

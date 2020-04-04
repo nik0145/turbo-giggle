@@ -1,9 +1,18 @@
-
 import BasicLayout from "../layouts/BasicLayout";
 import UserLayout from "../layouts/UserLayout";
 import UserPage from "../pages/UserPage";
+
 import Home from "../components/Home";
 import Hello from "../components/Hello";
+import React from "react";
+import UserLogin from "../pages/UserLogin";
+const NoMatch = () => {
+  return (
+    <div>
+      <h3>No Match</h3>
+    </div>
+  );
+};
 // ! Так как Switch останавливается после первого матча, а "/" матчится на любой урл.
 //* следует урл "/" ставить в конец
 // TODO а лучше разобраться с этим чтоб багу такую с собой не таскать
@@ -16,9 +25,21 @@ const routes = [
     routes: [
       {
         name: "login",
-        exact: false,
+        exact: true,
         path: "/user/login",
         component: UserPage,
+      },
+      {
+        name: "auth",
+        exact: true,
+        path: "/user/auth",
+        component: UserLogin,
+      },
+      {
+        name: "NoMatch",
+        exact: false,
+        path: "*",
+        component: NoMatch,
       },
     ],
   },
@@ -39,6 +60,12 @@ const routes = [
         path: "/",
         exact: false,
         component: Home,
+      },
+      {
+        name: "NoMatch",
+        exact: false,
+        path: "*",
+        component: NoMatch,
       },
     ],
   },
