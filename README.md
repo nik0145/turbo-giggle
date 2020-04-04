@@ -19,14 +19,15 @@
 - [ ] настроить для пользователей разных ролей apollo
 - [ ] сделать страницу с входом для пользователя [видос](https://www.youtube.com/watch?v=LXGYUN5_Nb4) 
 - [ ] добавить header(инфа о юзере и название страницы) сверху  в layout
-- [ ] Подключить формы (formik)
+- [ ] Подключить формы (formik) [пример есть тут и многа чего там еще есть ](https://codesandbox.io/)
 - [ ] сделать тему и настроить babel [ant.design](https://ant.design/docs/react/use-in-typescript)
 - [ ] настроить webpack
 - [ ] засунуть все это в докер
 - [ ] настроить свой [ant design](https://medium.com/@hydrock/%D0%BA%D0%B0%D0%BA-%D0%BA%D0%B0%D1%81%D1%82%D0%BE%D0%BC%D0%B8%D0%B7%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D1%82%D1%8C-ant-design-%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D1%83%D1%8F-react-webpack-%D0%BF%D0%BE%D1%82%D0%B5%D1%80%D1%8F%D0%BD%D0%BD%D0%B0%D1%8F-%D0%B8%D1%81%D1%82%D1%80%D1%83%D0%BA%D1%86%D0%B8%D1%8F-b3d90958eaec) [пример](https://github.com/ant-design/ant-design-pro/blob/master/src/layouts/BasicLayout.tsx)
-- [ ] сделать  layout [вот](https://v1.pro.ant.design/docs/router-and-nav) и  роутинг нормальный в папочке как в ссылке [ant.design](https://pro.ant.design/docs/router-and-nav)
+- [x] сделать  layout [вот](https://v1.pro.ant.design/docs/router-and-nav) и  роутинг нормальный в папочке как в ссылке [ant.design](https://pro.ant.design/docs/router-and-nav).
 
 ### Полезные ссылки 
+-  https://codesandbox.io/
  - https://strapi.io/blog/build-a-blog-with-react-strapi-and-apollo
  - https://www.leighhalliday.com/generating-types-apollo
  - https://github.com/apollographql/apollo-tooling#apollo-clientcodegen-output

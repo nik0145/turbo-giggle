@@ -4,21 +4,41 @@ import UserLayout from "../layouts/UserLayout";
 import UserPage from "../pages/UserPage";
 import Home from "../components/Home";
 import Hello from "../components/Hello";
+// ! Так как Switch останавливается после первого матча, а "/" матчится на любой урл.
+//* следует урл "/" ставить в конец
+// TODO а лучше разобраться с этим чтоб багу такую с собой не таскать
 const routes = [
   {
-    path: "/kek",
+    path: "/user",
+    name: "UserLayout",
+    exact: false,
+    component: UserLayout,
+    routes: [
+      {
+        name: "login",
+        exact: false,
+        path: "/user/login",
+        component: UserPage,
+      },
+    ],
+  },
+  {
+    path: "/",
     name: "BasicLayout",
+    exact: false,
     component: BasicLayout,
     routes: [
       {
-        name: "Home",
-        path: "/kek/home",
-        component: Home,
+        name: "Hello",
+        path: "/hello",
+        exact: false,
+        component: Hello,
       },
       {
-        name: "Hello",
-        path: "/kek/hello",
-        component: Hello,
+        name: "Home",
+        path: "/",
+        exact: false,
+        component: Home,
       },
     ],
   },
@@ -33,17 +53,7 @@ const routes = [
   //     }
   //   ]
   // }
-  {
-    path: "/user",
-    component: UserLayout,
-    routes: [
-      {
-        name: "login",
-        path: "/user/login",
-        component: UserPage,
-      },
-    ],
-  },
+
   //   {
   //     path: "/",
   //     component: "../layouts/SecurityLayout",
