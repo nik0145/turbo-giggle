@@ -11,6 +11,7 @@ import "./App.css";
 import {
   BrowserRouter as Router,
   Route,
+  Link,
   // Redirect,
   Switch
 } from "react-router-dom";
@@ -24,6 +25,11 @@ export interface propsType {
   path?: string;
   component: any;
   layout: any;
+  routes?: {
+    name: string;
+    path: string;
+    component: any;
+  }[];
   key: any;
   children?: any;
 }
@@ -62,14 +68,30 @@ class SiderDemo extends React.Component {
   render() {
     return (
       <Router>
+        <ul>
+          <li>
+            <Link to="/user/login">Bus</Link>
+          </li>
+          <li>
+            <Link to="/kek/hello">Cart</Link>
+          </li>
+          <li>
+            <Link to="/kek/">Cart</Link>
+          </li>
+        </ul>
         <Suspense fallback={<div>Загрузка...</div>}>
           <Switch>
             {routes.map((route, i) => (
-              <route.component
+              <Route
+                path={route.path}
                 key={i}
-               
-                {...route}
-              ></route.component>
+                render={(props: any) => (
+                  <route.component
+                    {...route}
+                    routes={route.routes}
+                  ></route.component>
+                )}
+              />
             ))}
           </Switch>
         </Suspense>

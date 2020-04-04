@@ -1,21 +1,23 @@
 
 import BasicLayout from "../layouts/BasicLayout";
+import UserLayout from "../layouts/UserLayout";
+import UserPage from "../pages/UserPage";
 import Home from "../components/Home";
 import Hello from "../components/Hello";
 const routes = [
   {
-    path: "/",
+    path: "/kek",
     name: "BasicLayout",
     component: BasicLayout,
     routes: [
       {
         name: "Home",
-        path: "/",
+        path: "/kek/home",
         component: Home,
       },
       {
         name: "Hello",
-        path: "/hello",
+        path: "/kek/hello",
         component: Hello,
       },
     ],
@@ -31,17 +33,17 @@ const routes = [
   //     }
   //   ]
   // }
-  //   {
-  //     path: "/user",
-  //     component: "../layouts/UserLayout",
-  //     routes: [
-  //       {
-  //         name: "login",
-  //         path: "/user/login",
-  //         component: "./user/login"
-  //       }
-  //     ]
-  //   },
+  {
+    path: "/user",
+    component: UserLayout,
+    routes: [
+      {
+        name: "login",
+        path: "/user/login",
+        component: UserPage,
+      },
+    ],
+  },
   //   {
   //     path: "/",
   //     component: "../layouts/SecurityLayout",

@@ -14,10 +14,11 @@ export interface propsType {
   path: string;
   component: any;
   children?: any;
+  exact?: any;
   routes: {
     name: string;
     path: string;
-    component:any;
+    component: any;
   }[];
 }
 
@@ -36,12 +37,12 @@ const BasicLayout = ({ component: Component, routes, ...rest }: propsType) => {
               <Menu.Item key="1">
                 <PieChartOutlined />
                 <span>Home</span>
-                <Link to="/" />
+                <Link to="/kek/home" />
               </Menu.Item>
               <Menu.Item key="2">
                 <PieChartOutlined />
                 <span>Hello</span>
-                <Link to="/hello" />
+                <Link to="/kek/hello" />
               </Menu.Item>
             </Menu>
           </Sider>
@@ -52,13 +53,17 @@ const BasicLayout = ({ component: Component, routes, ...rest }: propsType) => {
                 className="site-layout-background"
                 style={{ padding: 24, minHeight: 360 }}
               >
-                  <Switch>
-                        {routes.map((route, i) =>
-                          route ? (
-                            <route.component exact key={i} {...route} />
-                          ) : null
-                        )}
-                  </Switch>
+                <Switch>
+                  {routes.map((route, i) =>
+                    route ? (
+                      <Route
+                        path={route.path}
+                        key={i}
+                        render={(props) => <route.component {...props} />}
+                      />
+                    ) : null
+                  )}
+                </Switch>
                 {/* <Component {...matchProps} /> */}
               </div>
             </Content>
