@@ -29,8 +29,8 @@ export interface propsType {
 //https://tylermcginnis.com/react-router-route-config/
 //https://www.youtube.com/watch?v=aeK8kS-goIA&list=PLqrUy7kON1mfJ1cQfJJ1FiULLNngvlFTD&index=12
 
-class SiderDemo extends React.Component {
-  render() {
+
+const App: React.FC = ()=> {
     return (
       <Router>
         {/* <ul>
@@ -58,7 +58,6 @@ class SiderDemo extends React.Component {
         </Switch>
       </Router>
     );
-  }
 }
 
-export default SiderDemo;
+export default App;

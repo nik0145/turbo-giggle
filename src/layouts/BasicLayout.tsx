@@ -23,11 +23,10 @@ export interface propsType {
 const BasicLayout = ({ component: Component, routes, ...rest }: propsType) => {
   const [collapsed, setCollapsed] = useState(false);
   return (
-      <Layout style={{ minHeight: "100vh" }}>
-            <Sider collapsible collapsed={collapsed} onCollapse={setCollapsed}>
+    <Layout style={{ minHeight: "100vh" }}>
+      <Sider collapsible collapsed={collapsed} onCollapse={setCollapsed}>
         <div className="logo">turbo-giggle</div>
         <Menu theme="dark" defaultSelectedKeys={["1"]} mode="inline">
-
           <Menu.Item key="1">
             <PieChartOutlined />
             <span>Home</span>
@@ -47,17 +46,19 @@ const BasicLayout = ({ component: Component, routes, ...rest }: propsType) => {
             className="site-layout-background"
             style={{ padding: 24, minHeight: 360 }}
           >
-      <Switch>
-        {routes &&
-          routes.map((route, i) => <RouteSubWrapper key={i} {...route} />)}
-      </Switch>
-      </div>
+            <Switch>
+              {routes &&
+                routes.map((route, i) => (
+                  <RouteSubWrapper key={i} {...route} />
+                ))}
+            </Switch>
+          </div>
         </Content>
         <Footer style={{ textAlign: "center" }}>
           https://github.com/nik0145/turbo-giggle
         </Footer>
       </Layout>
-      </Layout>
+    </Layout>
   );
 };
 
