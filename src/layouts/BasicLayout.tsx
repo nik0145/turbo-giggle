@@ -9,7 +9,7 @@ import {
 import RouteSubWrapper from "../routes/RouteSubWrapper";
 const { Header, Content, Footer, Sider } = Layout;
 // !решил блин выучить typescript
-export interface propsType {
+export interface PropsType {
   path: string;
   component: any;
   children?: any;
@@ -20,7 +20,7 @@ export interface propsType {
   }[];
 }
 
-const BasicLayout = ({ component: Component, routes, ...rest }: propsType) => {
+const BasicLayout = ({ component: Component, routes, ...rest }: PropsType) => {
   const [collapsed, setCollapsed] = useState(false);
   return (
     <Layout style={{ minHeight: "100vh" }}>

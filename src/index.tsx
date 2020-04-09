@@ -7,12 +7,23 @@ import client from "./utils/apolloClient";
 import "./index.css";
 import App from "./App";
 
+import { Provider } from 'react-redux'
+import { createStore } from "redux";
+import rootReducer from "./reducers";
+
+const configureStore = ()=> createStore(
+  rootReducer
+  
+)
+const store = configureStore();
 const WrappedApp = (
-  <Router>
-    <ApolloProvider client={client}>
-      <App />
-    </ApolloProvider>
-  </Router>
+  <Provider store={store}>
+    <Router>
+      <ApolloProvider client={client}>
+        <App />
+      </ApolloProvider>
+    </Router>
+  </Provider>
 );
 
 ReactDOM.render(WrappedApp, document.getElementById("root"));

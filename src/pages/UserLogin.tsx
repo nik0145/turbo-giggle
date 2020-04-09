@@ -6,11 +6,11 @@ import React from "react";
 //https://jasonwatmore.com/post/2017/12/07/react-redux-jwt-authentication-tutorial-example
 //https://www.youtube.com/watch?v=4T_P7wQhlMY
 import { Form, Input, Button } from "antd";
-import axios from 'axios';
-interface ICredentials {
-  username:string;
-  password:string;
-}
+import axios from "axios";
+// interface ICredentials {
+//   username: string;
+//   password: string;
+// }
 const layout = {
   labelCol: { span: 8 },
   wrapperCol: { span: 16 },
@@ -18,23 +18,25 @@ const layout = {
 const tailLayout = {
   wrapperCol: { offset: 8, span: 16 },
 };
- const onFinish = ({ username, password }:any) => {
-   console.log("Success:", username, password);
-   axios
-     .post(`${process.env.REACT_APP_API_URL}auth/local`, {
-       identifier: username,
-       password: password,
-     })
-     .then(({data}) => {
-       console.log(data);
-       const {jwt,user} = data
-     }).catch(error=>{
-         console.log("An error occurred:", error);
-     });
- };
-  const onFinishFailed = (errorInfo:any) => {
-    console.log("Failed:", errorInfo);
-  };
+const onFinish = ({ username, password }: any) => {
+  console.log("Success:", username, password);
+  axios
+    .post(`${process.env.REACT_APP_API_URL}auth/local`, {
+      identifier: username,
+      password: password,
+    })
+    .then(({ data }) => {
+      const { jwt, user } = data;
+      localStorage.setItem("token", jwt);
+      console.log(jwt, user);
+    })
+    .catch((error) => {
+      console.log("An error occurred:", error);
+    });
+};
+const onFinishFailed = (errorInfo: any) => {
+  console.log("Failed:", errorInfo);
+};
 const UserLogin = () => {
   return (
     <div>
