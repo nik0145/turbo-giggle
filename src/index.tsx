@@ -9,7 +9,7 @@ import App from './App'
 
 import { Provider } from 'react-redux'
 import store from './store'
-
+//https://codesandbox.io/s/9on71rvnyo?file=/src/redux/reducers/visibilityFilter.js
 const WrappedApp = (
   <Provider store={store}>
     <ApolloProvider client={client}>
