@@ -3,9 +3,12 @@ import "./App.css";
 import {
   BrowserRouter as Router,
   // Link,
-  Switch
+  Switch,
+  Redirect
 } from "react-router-dom";
 import routes from "./routes/routes";
+
+
 import RouteSubWrapper from "./routes/RouteSubWrapper";
 // !решил блин выучить typescript
 // export interface propsType {
@@ -55,9 +58,11 @@ const App: React.FC = ()=> {
           {routes.map((route) => (
             <RouteSubWrapper key={route.name} {...route} />
           ))}
+          
+          <Redirect from="*" to="/" />
         </Switch>
       </Router>
-    );
+    )
 }
 
 export default App;

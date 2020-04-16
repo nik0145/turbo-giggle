@@ -22,7 +22,7 @@ const tailLayout = {
   wrapperCol: { offset: 8, span: 16 },
 };
 
-const UserLogin = () => {
+const UserLogin = (props: any) => {
   const dispatch = useDispatch()
   const onFinish = ({ username, password }: any) => {
     console.log('Success:', username, password)
@@ -35,8 +35,11 @@ const UserLogin = () => {
         const { jwt, user } = data
         localStorage.setItem('token', jwt)
         dispatch(loginUser(user))
+        props.history.push('/')
       })
       .catch((error) => {
+        // вызвать тут ошибку 
+        // dispatch(loginUser(user))
         console.log('An error occurred:', error)
       })
   }
