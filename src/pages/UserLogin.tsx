@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { loginUser } from '../actions/auth'
 //https://blog.strapi.io/protected-routes-and-authentication-with-react-and-node-js/
@@ -7,25 +7,34 @@ import { loginUser } from '../actions/auth'
 //https://levelup.gitconnected.com/using-jwt-in-your-react-redux-app-for-authorization-d31be51a50d2
 //https://jasonwatmore.com/post/2017/12/07/react-redux-jwt-authentication-tutorial-example
 //https://www.youtube.com/watch?v=4T_P7wQhlMY
-import { Form, Input, Button, Row } from "antd";
-import axios from "axios";
+import { Form, Input, Button, Row, Typography } from 'antd'
+import axios from 'axios'
+
+const { Text } = Typography;
 // interface ICredentials {
 //   username: string;
 //   password: string;
 // }
 
+// const layout = {
+//   wrapperCol: { span: 14, offset: 2, },
+// }
+// const tailLayout = {
+//   labelCol: { span: 4 },
+//   wrapperCol: { span: 14 },
+// }
 const layout = {
-   wrapperCol: { span: 14, offset: 4 },
+  labelCol: { span: 8 },
+  wrapperCol: { span: 16 },
 };
 const tailLayout = {
-    labelCol: { span: 4 },
-          wrapperCol: { span: 14 },
+  wrapperCol: { offset: 8, span: 16 },
 };
 
 const UserLogin = (props: any) => {
   const dispatch = useDispatch()
+  const [error, onGetError] = useState('')
   const onFinish = ({ username, password }: any) => {
-    console.log('Success:', username, password)
     axios
       .post(`${process.env.REACT_APP_API_URL}auth/local`, {
         identifier: username,
@@ -37,10 +46,11 @@ const UserLogin = (props: any) => {
         dispatch(loginUser(user))
         props.history.push('/')
       })
-      .catch((error) => {
-        // вызвать тут ошибку 
+      .catch((e) => {
+        // вызвать тут ошибку
         // dispatch(loginUser(user))
-        console.log('An error occurred:', error)
+        onGetError(e.message)
+        // console.log('An error occurred:', error)
       })
   }
   const onFinishFailed = (errorInfo: any) => {
@@ -48,38 +58,42 @@ const UserLogin = (props: any) => {
   }
   return (
     <div>
-      <p style={{ textAlign: "center" }}>Введите логин и пароль</p>
+      <p style={{ textAlign: 'center' }}>Введите логин и пароль</p>
       <Row justify="center">
-      <Form
-        {...layout}
-        name="basic"
-        initialValues={{ remember: true }}
-        onFinish={onFinish}
-        onFinishFailed={onFinishFailed}
-      >
-        <Form.Item
-          label="Username"
-          name="username"
-          rules={[{ required: true, message: "Please input your username!" }]}
+        <Form
+          {...layout}
+          name="basic"
+          initialValues={{ remember: true }}
+          onFinish={onFinish}
+          onFinishFailed={onFinishFailed}
         >
-          <Input />
-        </Form.Item>
-        <Form.Item
-          label="Password"
-          name="password"
-          rules={[{ required: true, message: "Please input your password!" }]}
-        >
-          <Input.Password />
-        </Form.Item>
-        <Form.Item {...tailLayout}>
-          <Button type="primary" htmlType="submit">
-            Submit
-          </Button>
-        </Form.Item>
-      </Form>
+          <Form.Item
+            label="Логин"
+            name="username"
+            rules={[{ required: true, message: 'Введите логин!' }]}
+          >
+            <Input />
+          </Form.Item>
+          <Form.Item
+            
+            label="Пароль"
+            name="password"
+            rules={[{ required: true, message: 'Введите пароль!' }]}
+          >
+            <Input.Password />
+          </Form.Item>
+        
+          <Form.Item {...tailLayout}>
+            <Button type="primary" htmlType="submit">
+              Submit
+            </Button>
+               {error && <Text type="danger" style={{ marginLeft: '1em' }}>{error}</Text>}
+          </Form.Item>
+        </Form>
       </Row>
-    </div>
-  );
-};
 
-export default UserLogin;
+    </div>
+  )
+}
+
+export default UserLogin
