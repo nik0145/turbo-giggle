@@ -10,6 +10,9 @@ export const loginUser = (userObj) => ({
   type: LOGIN_USER,
   payload: userObj,
 })
-export const logoutUser = () => ({
+export const logoutUser = () => {
+  localStorage.removeItem('token');
+  return {
   type: LOGOUT_USER,
-})
+}
+}

@@ -2,12 +2,13 @@ import React, { useState } from "react";
 import { Layout, Menu } from "antd";
 import { Link } from "react-router-dom";
 import { PieChartOutlined } from "@ant-design/icons";
+import Footer from './Footer';
 import {
   // Redirect,
   Switch,
 } from "react-router-dom";
 import RouteSubWrapper from "../routes/RouteSubWrapper";
-const { Header, Content, Footer, Sider } = Layout;
+const { Header, Content, Sider } = Layout;
 // !решил блин выучить typescript
 export interface PropsType {
   path: string;
@@ -54,9 +55,7 @@ const BasicLayout = ({ component: Component, routes, ...rest }: PropsType) => {
             </Switch>
           </div>
         </Content>
-        <Footer style={{ textAlign: "center" }}>
-          https://github.com/nik0145/turbo-giggle
-        </Footer>
+       <Footer/>
       </Layout>
     </Layout>
   );

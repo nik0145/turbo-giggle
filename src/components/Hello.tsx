@@ -2,15 +2,15 @@ import React from "react";
 import { useQuery } from "@apollo/react-hooks";
 import ArticleQuery from "../queries/ArticleQuery";
 import { kek } from "../queries/types/kek";
-export interface propsType {
-  compiler: String;
-  framework: String;
+export interface PropsType {
+  compiler: string;
+  framework: string;
 }
 
-export default function Hello(props: propsType) {
+export default function Hello(props: PropsType) {
   const { loading, data, error } = useQuery<kek>(ArticleQuery);
   if (loading) return <div>Loading</div>;
-  if (error) return <h1>ERROR</h1>;
+if (error) return <h1>{error.message} </h1>;
   if (!data) return <div>no data</div>;
   return (
     <div>

@@ -10,7 +10,7 @@ import { loginUser } from '../actions/auth'
 import { Form, Input, Button, Row, Typography } from 'antd'
 import axios from 'axios'
 
-const { Text } = Typography;
+const { Text } = Typography
 // interface ICredentials {
 //   username: string;
 //   password: string;
@@ -26,15 +26,16 @@ const { Text } = Typography;
 const layout = {
   labelCol: { span: 8 },
   wrapperCol: { span: 16 },
-};
+}
 const tailLayout = {
   wrapperCol: { offset: 8, span: 16 },
-};
+}
 
 const UserLogin = (props: any) => {
   const dispatch = useDispatch()
   const [error, onGetError] = useState('')
   const onFinish = ({ username, password }: any) => {
+    // выплиить его и заменить на graphql
     axios
       .post(`${process.env.REACT_APP_API_URL}auth/local`, {
         identifier: username,
@@ -75,25 +76,73 @@ const UserLogin = (props: any) => {
             <Input />
           </Form.Item>
           <Form.Item
-            
             label="Пароль"
             name="password"
             rules={[{ required: true, message: 'Введите пароль!' }]}
           >
             <Input.Password />
           </Form.Item>
-        
+
           <Form.Item {...tailLayout}>
             <Button type="primary" htmlType="submit">
               Submit
             </Button>
-               {error && <Text type="danger" style={{ marginLeft: '1em' }}>{error}</Text>}
+            {error && (
+              <div>
+                <Text type="danger">{error}</Text>
+              </div>
+            )}
           </Form.Item>
         </Form>
       </Row>
-
     </div>
   )
 }
 
 export default UserLogin
+
+
+// const PROFILE_QUERY = gql`
+//   query CurrentUserForLayout {
+//     currentUser {
+//       login
+//       avatar_url
+//     }
+//   }
+// `;
+
+// function Profile() {
+//   const { client, loading, data: { currentUser } } = useQuery(
+//     PROFILE_QUERY,
+//     { fetchPolicy: "network-only" }
+//   );
+
+//   if (loading) {
+//     return <p className="navbar-text navbar-right">Loading...</p>;
+//   }
+
+//   if (currentUser) {
+//     return (
+//       <span>
+//         <p className="navbar-text navbar-right">
+//           {currentUser.login}
+//           &nbsp;
+//           <button
+//             onClick={() => {
+//               // call your auth logout code then reset store
+//               App.logout().then(() => client.resetStore());
+//             }}
+//           >
+//             Log out
+//           </button>
+//         </p>
+//       </span>
+//     );
+//   }
+
+//   return (
+//     <p className="navbar-text navbar-right">
+//       <a href="/login/github">Log in with GitHub</a>
+//     </p>
+//   );
+// }

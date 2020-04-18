@@ -4,8 +4,10 @@ import {
   Switch,
 } from "react-router-dom";
 import RouteSubWrapper from "../routes/RouteSubWrapper";
-const { Header, Content, Footer } = Layout;
-export interface propsType {
+import Footer from "./Footer";
+const { Header, Content } = Layout;
+// https://www.youtube.com/watch?v=FyyPUIAe6kc
+export interface PropsType {
   path: string;
   component: any;
   children?: any;
@@ -16,7 +18,7 @@ export interface propsType {
   }[];
 }
 
-const UserLayout = ({ component: Component, routes, ...rest }: propsType) => {
+const UserLayout = ({ component: Component, routes, ...rest }: PropsType) => {
   return (
     <Layout style={{ minHeight: "100vh" }}>
       <Layout className="site-layout">
@@ -33,9 +35,7 @@ const UserLayout = ({ component: Component, routes, ...rest }: propsType) => {
             </Switch>
           </div>
         </Content>
-        <Footer style={{ textAlign: "center" }}>
-          https://github.com/nik0145/turbo-giggle
-        </Footer>
+        <Footer/>
       </Layout>
     </Layout>
   );
