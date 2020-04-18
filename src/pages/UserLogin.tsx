@@ -7,7 +7,7 @@ import { loginUser } from '../actions/auth'
 //https://levelup.gitconnected.com/using-jwt-in-your-react-redux-app-for-authorization-d31be51a50d2
 //https://jasonwatmore.com/post/2017/12/07/react-redux-jwt-authentication-tutorial-example
 //https://www.youtube.com/watch?v=4T_P7wQhlMY
-import { Form, Input, Button } from "antd";
+import { Form, Input, Button, Row } from "antd";
 import axios from "axios";
 // interface ICredentials {
 //   username: string;
@@ -15,11 +15,11 @@ import axios from "axios";
 // }
 
 const layout = {
-  labelCol: { span: 8 },
-  wrapperCol: { span: 16 },
+   wrapperCol: { span: 14, offset: 4 },
 };
 const tailLayout = {
-  wrapperCol: { offset: 8, span: 16 },
+    labelCol: { span: 4 },
+          wrapperCol: { span: 14 },
 };
 
 const UserLogin = (props: any) => {
@@ -49,6 +49,7 @@ const UserLogin = (props: any) => {
   return (
     <div>
       <p style={{ textAlign: "center" }}>Введите логин и пароль</p>
+      <Row justify="center">
       <Form
         {...layout}
         name="basic"
@@ -76,6 +77,7 @@ const UserLogin = (props: any) => {
           </Button>
         </Form.Item>
       </Form>
+      </Row>
     </div>
   );
 };

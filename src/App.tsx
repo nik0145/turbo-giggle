@@ -4,7 +4,7 @@ import {
   BrowserRouter as Router,
   // Link,
   Switch,
-  Redirect
+  // Redirect
 } from "react-router-dom";
 import routes from "./routes/routes";
 
@@ -32,34 +32,13 @@ import RouteSubWrapper from "./routes/RouteSubWrapper";
 //https://tylermcginnis.com/react-router-route-config/
 //https://www.youtube.com/watch?v=aeK8kS-goIA&list=PLqrUy7kON1mfJ1cQfJJ1FiULLNngvlFTD&index=12
 
-
 const App: React.FC = ()=> {
     return (
       <Router>
-        {/* <ul>
-          <li>
-            <Link to="/user/login">user</Link>
-          </li>
-          <li>
-            <Link to="/user/auth">auth</Link>
-          </li>
-          <li>
-            <Link to="/hello">hello</Link>
-          </li>
-          <li>
-            <Link to="/">/</Link>
-          </li>
-          <li>
-            <Link to="/home">home</Link>
-          </li>
-        </ul> */}
-
         <Switch>
           {routes.map((route) => (
             <RouteSubWrapper key={route.name} {...route} />
           ))}
-          
-          <Redirect from="*" to="/" />
         </Switch>
       </Router>
     )

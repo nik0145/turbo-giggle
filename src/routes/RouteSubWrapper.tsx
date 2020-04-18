@@ -1,14 +1,12 @@
-import { Route } from "react-router-dom";
 import React from "react";
-
+import PrivateRoute from "./PrivateRoute";
 const RouteSubWrapper = (route: any, ...rest: any) => {
   return (
-    <Route
-      path={route.path}
-      {...rest}
+    <PrivateRoute
+      {...route}
       render={(props: any) => (
         <route.component {...props} routes={route.routes} />
-      )}
+            )      }
     />
   );
 };

@@ -2,7 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { ApolloProvider } from '@apollo/react-components'
 import * as serviceWorker from './serviceWorker'
-import { BrowserRouter as Router } from 'react-router-dom'
+// import { BrowserRouter as Router } from 'react-router-dom'
 import client from './utils/apolloClient'
 import './index.css'
 import App from './App'
@@ -13,9 +13,7 @@ import store from './store'
 const WrappedApp = (
   <Provider store={store}>
     <ApolloProvider client={client}>
-      <Router>
         <App />
-      </Router>
     </ApolloProvider>
   </Provider>
 )
