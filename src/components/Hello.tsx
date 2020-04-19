@@ -21,9 +21,8 @@ if (error) return <h1>{error.message} </h1>;
         data.articles.map(
           (article) =>
             article && (
-              <Col span={8}>
+              <Col key={article.id}  span={8}>
                 <Card
-                  key={article.id}
                   hoverable
                   style={{ width: 240 }}
                   cover={
@@ -42,5 +41,5 @@ if (error) return <h1>{error.message} </h1>;
             )
         )}
     </Row>
-  )
+  );
 }

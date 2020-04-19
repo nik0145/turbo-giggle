@@ -1,15 +1,15 @@
-import React, { useState } from "react";
-import { Layout, Menu } from "antd";
-import { Link } from "react-router-dom";
-import { PieChartOutlined } from "@ant-design/icons";
+import React, { useState } from 'react';
+import { Layout, Menu } from 'antd';
+import { Link } from 'react-router-dom';
+import { PieChartOutlined } from '@ant-design/icons';
 import Footer from './Footer';
 import Header from './Header';
 
 import {
   // Redirect,
   Switch,
-} from "react-router-dom";
-import RouteSubWrapper from "../routes/RouteSubWrapper";
+} from 'react-router-dom';
+import RouteSubWrapper from '../routes/RouteSubWrapper';
 const { Content, Sider } = Layout;
 // !решил блин выучить typescript
 export interface PropsType {
@@ -60,7 +60,7 @@ const BasicLayout = ({ component: Component, routes, ...rest }: PropsType) => {
         <Footer />
       </Layout>
     </Layout>
-  )
+  );
 };
 
 export default BasicLayout;

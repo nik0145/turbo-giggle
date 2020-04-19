@@ -1,18 +1,28 @@
-import { LOGIN_REQUEST, LOGOUT_USER, LOGIN_USER } from '../constants/auth'
+import {
+  LOGIN_REQUEST,
+  LOGOUT_SUCCESS,
+  LOGIN_SUCCESS,
+  LOGIN_FAILURE,
+} from '../constants/auth';
+
 export const loginRequest = ({ username, password }) => {
   return {
     type: LOGIN_REQUEST,
     username,
     password,
-  }
-}
-export const loginUser = (userObj) => ({
-  type: LOGIN_USER,
-  payload: userObj,
-})
+  };
+};
+export const receiveLogin = (user) => ({
+  type: LOGIN_SUCCESS,
+  payload: user,
+});
+
+export const loginError = (message) => ({
+  type: LOGIN_FAILURE,
+  payload: message,
+});
 export const logoutUser = () => {
-  localStorage.removeItem('token');
   return {
-  type: LOGOUT_USER,
-}
-}
+    type: LOGOUT_SUCCESS,
+  };
+};

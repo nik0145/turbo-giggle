@@ -1,36 +1,43 @@
-import { LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE, LOGIN_USER, LOGOUT_USER } from "../constants/auth";
+import {
+  LOGIN_REQUEST,
+  LOGIN_SUCCESS,
+  LOGIN_FAILURE,
+  LOGOUT_SUCCESS,
+} from "../constants/auth";
+
 const initialState = {
-  loading: false,
-  loaded: false,
-  errors: [],
-  currentUser: {},
+  isLoading: false,
+  keeek: false,
+  isAuthenticated: localStorage.getItem('token') ? true : false,
+  errors: null,
+  currentUser: {kek:'kek'},
 };
 const reducer = (state = initialState, action: any): any => {
-  const { response, errors } = action;
   switch (action.type) {
-    case LOGIN_USER:
-      return { ...state, currentUser: action.payload }
     case LOGIN_REQUEST:
       return {
         ...state,
-        loading: true,
-        loaded: false,
-      };
-    case LOGOUT_USER:
+        isLoading: true,
+        keeek:true,
+        isAuthenticated: false,
+        
+      }
+    case LOGOUT_SUCCESS:
       return { ...state, currentUser: {} }
     case LOGIN_SUCCESS:
       return {
         ...state,
-        loading: false,
-        loaded: true,
-        token: response.token,
+        isLoading: false,
+        isAuthenticated: true,
+        errors: null,
+        currentUser: action.payload
       };
     case LOGIN_FAILURE:
       return {
         ...state,
-        loading: false,
-        loaded: false,
-        errors,
+        isLoading: false,
+        isAuthenticated: false,
+        errors: action.errors,
       };
     default:
       return state;
