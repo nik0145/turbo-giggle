@@ -3,12 +3,14 @@ import { Layout, Menu } from "antd";
 import { Link } from "react-router-dom";
 import { PieChartOutlined } from "@ant-design/icons";
 import Footer from './Footer';
+import Header from './Header';
+
 import {
   // Redirect,
   Switch,
 } from "react-router-dom";
 import RouteSubWrapper from "../routes/RouteSubWrapper";
-const { Header, Content, Sider } = Layout;
+const { Content, Sider } = Layout;
 // !решил блин выучить typescript
 export interface PropsType {
   path: string;
@@ -24,10 +26,10 @@ export interface PropsType {
 const BasicLayout = ({ component: Component, routes, ...rest }: PropsType) => {
   const [collapsed, setCollapsed] = useState(false);
   return (
-    <Layout style={{ minHeight: "100vh" }}>
+    <Layout style={{ minHeight: '100vh' }}>
       <Sider collapsible collapsed={collapsed} onCollapse={setCollapsed}>
         <div className="logo">turbo-giggle</div>
-        <Menu theme="dark" defaultSelectedKeys={["1"]} mode="inline">
+        <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
           <Menu.Item key="1">
             <PieChartOutlined />
             <span>Home</span>
@@ -41,8 +43,8 @@ const BasicLayout = ({ component: Component, routes, ...rest }: PropsType) => {
         </Menu>
       </Sider>
       <Layout className="site-layout">
-        <Header className="site-layout-background" style={{ padding: 0 }} />
-        <Content style={{ margin: "0 16px" }}>
+        <Header />
+        <Content style={{ margin: '0 16px' }}>
           <div
             className="site-layout-background"
             style={{ padding: 24, minHeight: 360 }}
@@ -55,10 +57,10 @@ const BasicLayout = ({ component: Component, routes, ...rest }: PropsType) => {
             </Switch>
           </div>
         </Content>
-       <Footer/>
+        <Footer />
       </Layout>
     </Layout>
-  );
+  )
 };
 
 export default BasicLayout;
