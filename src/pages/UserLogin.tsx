@@ -15,13 +15,10 @@ const { Text } = Typography;
 //   password: string;
 // }
 
-// const layout = {
-//   wrapperCol: { span: 14, offset: 2, },
-// }
-// const tailLayout = {
-//   labelCol: { span: 4 },
-//   wrapperCol: { span: 14 },
-// }
+
+const setUser = (user: object): any =>
+  localStorage.setItem("user", JSON.stringify(user))
+
 const layout = {
   labelCol: { span: 8 },
   wrapperCol: { span: 16 },
@@ -45,6 +42,7 @@ console.log(props);
       .then(({ data }) => {
         const { jwt, user } = data;
         localStorage.setItem('token', jwt);
+        setUser(user);
         dispatch(receiveLogin(user));
         props.history.push('/');
       })

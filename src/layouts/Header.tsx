@@ -7,16 +7,19 @@ import { useHistory } from 'react-router-dom';
 const { SubMenu } = Menu;
 
 const Header = (props: any) => {
-  console.log(props);
+  let username = ''
   const store = useStore();
   const history = useHistory();
   const { isAuthenticated, currentUser } = store.getState().auth;
   const dispatch = useDispatch();
-  const { username } = currentUser;
-
+  console.log(currentUser);
+  if (currentUser) {
+     username  = currentUser.username;
+  }
   const logout = () => {
     dispatch(logoutUser());
     localStorage.removeItem('token');
+    localStorage.removeItem('user');
     history.push('/');
   };
   return (
@@ -37,7 +40,7 @@ const Header = (props: any) => {
                     }}
                     size="large"
                   >
-                    {username}
+                    {username[0].toUpperCase()}
                   </Avatar>
                 }
               >
