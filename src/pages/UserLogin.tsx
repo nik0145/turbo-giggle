@@ -8,7 +8,6 @@ import { loginError, receiveLogin, loginRequest } from '../actions/auth';
 //https://jasonwatmore.com/post/2017/12/07/react-redux-jwt-authentication-tutorial-example
 //https://www.youtube.com/watch?v=4T_P7wQhlMY
 import { Form, Input, Button, Row, Typography } from 'antd';
-import axios from 'axios';
 const { Text } = Typography;
 // interface ICredentials {
 //   username: string;
@@ -34,12 +33,19 @@ console.log(props);
 
   const onFinish = ({ username, password }: any) => {
     dispatch(loginRequest({ username, password }));
-    axios
-      .post(`${process.env.REACT_APP_API_URL}auth/local`, {
+    //! говорят рест тут очень даже подходит, но axios выпилю
+    fetch(`${process.env.REACT_APP_API_URL}auth/local`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json;charset=utf-8',
+      },
+      body: JSON.stringify({
         identifier: username,
         password: password,
-      })
-      .then(({ data }) => {
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
         const { jwt, user } = data;
         localStorage.setItem('token', jwt);
         setUser(user);

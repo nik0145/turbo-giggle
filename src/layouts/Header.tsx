@@ -12,7 +12,6 @@ const Header = (props: any) => {
   const history = useHistory();
   const { isAuthenticated, currentUser } = store.getState().auth;
   const dispatch = useDispatch();
-  console.log(currentUser);
   if (currentUser) {
      username  = currentUser.username;
   }

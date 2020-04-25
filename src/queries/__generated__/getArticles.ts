@@ -4,24 +4,32 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL query operation: kek
+// GraphQL query operation: getArticles
 // ====================================================
 
-export interface kek_articles_author {
+export interface getArticles_articles_image {
+  __typename: "UploadFile";
+  url: string;
+  name: string;
+  id: string;
+}
+
+export interface getArticles_articles_author {
   __typename: "UsersPermissionsUser";
   id: string;
   email: string;
   username: string;
 }
 
-export interface kek_articles {
+export interface getArticles_articles {
   __typename: "Article";
   id: string;
   title: string | null;
   content: string | null;
-  author: kek_articles_author | null;
+  image: getArticles_articles_image | null;
+  author: getArticles_articles_author | null;
 }
 
-export interface kek {
-  articles: (kek_articles | null)[] | null;
+export interface getArticles {
+  articles: (getArticles_articles | null)[] | null;
 }

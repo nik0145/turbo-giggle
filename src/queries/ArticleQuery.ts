@@ -1,15 +1,21 @@
-import { gql } from 'apollo-boost'
+import { gql } from 'apollo-boost';
 export default gql`
-query kek{
-articles{
-  id
-  title
-  content
-  author{
-    id
-    email
-    username
+  query getArticles {
+    articles {
+      id
+      title
+      content
+      image {
+        url
+        name
+        id
+        url
+      }
+      author {
+        id
+        email
+        username
+      }
+    }
   }
-}
-}
-`
+`;
