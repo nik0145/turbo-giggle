@@ -8,6 +8,7 @@ import { loginError, receiveLogin, loginRequest } from '../actions/auth';
 //https://jasonwatmore.com/post/2017/12/07/react-redux-jwt-authentication-tutorial-example
 //https://www.youtube.com/watch?v=4T_P7wQhlMY
 import { Form, Input, Button, Row, Typography } from 'antd';
+import { UserOutlined, LockOutlined } from '@ant-design/icons';
 const { Text } = Typography;
 // interface ICredentials {
 //   username: string;
@@ -79,14 +80,21 @@ console.log(props);
             name="username"
             rules={[{ required: true, message: 'Введите логин!' }]}
           >
-            <Input />
+            <Input
+              placeholder="kolya_tyurin@mail.ru"
+              prefix={<UserOutlined className="site-form-item-icon" />}
+            />
           </Form.Item>
           <Form.Item
             label="Пароль"
             name="password"
             rules={[{ required: true, message: 'Введите пароль!' }]}
           >
-            <Input.Password />
+            <Input.Password
+              prefix={<LockOutlined className="site-form-item-icon" />}
+              type="password"
+              placeholder="123123"
+            />
           </Form.Item>
 
           <Form.Item {...tailLayout}>
