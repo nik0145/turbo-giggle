@@ -1,12 +1,16 @@
 import React, { useState } from 'react';
 import { useQuery } from '@apollo/react-hooks';
-import ArticleQuery from '../queries/ArticleQuery';
+import ArticleQ from '../queries/ArticleQuery';
+import editArticleM from '../mutations/editArticle';
 import { getArticles } from '../queries/__generated__/getArticles';
+import { useMutation } from '@apollo/react-hooks';
+
+import { updateArticle } from '../mutations/__generated__/updateArticle';
 import {
   Modal,
   Typography,
   Upload,
-  message,
+  // message,
   Button,
   Card,
   Col,
@@ -23,38 +27,15 @@ import {
 } from '@ant-design/icons';
 
 const { Paragraph } = Typography;
-export interface PropsType {
-  compiler: string;
-  framework: string;
-}
 
-export default function Hello(props: PropsType) {
-  const { loading, data, error } = useQuery<getArticles>(ArticleQuery);
+export default function Hello() {
+  const { loading, data, error } = useQuery<getArticles>(ArticleQ);
+  const [editArticle] = useMutation<updateArticle, any>(editArticleM);
   const [visible, setVisible] = useState(false);
   const [articleById, setarticleById] = useState<any>({});
+  const [form] = Form.useForm();
   const [confirmLoading, setconfirmLoading] = useState(false);
-  // const fileList = [
-  //   {
-  //     uid: '-1',
-  //     name: 'xxx.png',
-  //     status: 'done',
-  //     url:
-  //       'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-  //     thumbUrl:
-  //       'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-  //   },
-  //   {
-  //     uid: '-2',
-  //     name: 'yyy.png',
-  //     status: 'error',
-  //   },
-  // ];
 
-  // const props1 = {
-  //   action: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
-  //   listType: 'picture',
-  //   defaultFileList: [...fileList],
-  // };
   //!!!!
   //https://ant.design/components/form/
   const layout = {
@@ -68,22 +49,27 @@ export default function Hello(props: PropsType) {
     console.log('onFinish');
   };
   const tailLayout = {};
-  const handleOk = () => {
-    console.log('handleOk');
+  const handleOk = async () => {
     setconfirmLoading(true);
-    setTimeout(() => {
+    try {
+      const data = await form.validateFields();
+      delete data.image;
+      editArticle({ variables: { data, where: { id: articleById.id } } });
+      // console.log(mutationLoading,mutationError)
+      setconfirmLoading(false);
+      setVisible(false);
+    } catch (error) {
+      console.log('Validate Failed:', error);
       setVisible(false);
       setconfirmLoading(false);
-    }, 2000);
+    }
   };
   const showModal = (id: string) => {
-
     if (data && data.articles) {
-      
       const article = data.articles.filter((i) => i && i.id === id)[0];
-      
+
       if (article && article.image) {
-        article.fileList=[]
+        article.fileList = [];
         article.image = {
           ...article.image,
           uid: article.image.id,
@@ -91,8 +77,8 @@ export default function Hello(props: PropsType) {
         };
         article.fileList = [article.image];
       }
-       setarticleById(article || {});
-       setVisible(true);
+      setarticleById(article || {});
+      setVisible(true);
     } else {
       //!вызвать тут ошибку
     }
@@ -144,13 +130,12 @@ export default function Hello(props: PropsType) {
       <Modal
         title="Редактировать"
         visible={visible}
-        onOk={handleOk}
         footer={[
           <Button
             key="submit"
             type="primary"
             loading={confirmLoading}
-            onClick={handleOk}
+            onClick={() => handleOk()}
           >
             Сохранить
           </Button>,
@@ -160,6 +145,7 @@ export default function Hello(props: PropsType) {
         <Form
           {...layout}
           name="basic"
+          form={form}
           initialValues={articleById}
           onFinish={onFinish}
           onFinishFailed={onFinishFailed}
@@ -171,11 +157,7 @@ export default function Hello(props: PropsType) {
             <Input.TextArea />
           </Form.Item>
 
-          <Form.Item
-            {...tailLayout}
-            label="Изображение"
-            name="image"
-          >
+          <Form.Item {...tailLayout} label="Изображение" name="image">
             <Upload fileList={articleById.fileList}>
               <Button>
                 <UploadOutlined /> Загрузить изображение

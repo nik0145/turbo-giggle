@@ -24,12 +24,11 @@ export interface getArticles_articles_author {
 }
 
 export interface getArticles_articles {
+  fileList: any[];
   __typename: "Article";
   id: string;
-
   title: string | null;
   content: string | null;
-  fileList: getArticles_articles_image[] | null;
   image: getArticles_articles_image | null;
   author: getArticles_articles_author | null;
 }
