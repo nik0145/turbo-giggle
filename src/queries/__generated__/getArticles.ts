@@ -10,6 +10,8 @@
 export interface getArticles_articles_image {
   __typename: "UploadFile";
   url: string;
+  uid: string;
+  thumbUrl: string;
   name: string;
   id: string;
 }
@@ -24,8 +26,10 @@ export interface getArticles_articles_author {
 export interface getArticles_articles {
   __typename: "Article";
   id: string;
+
   title: string | null;
   content: string | null;
+  fileList: getArticles_articles_image[] | null;
   image: getArticles_articles_image | null;
   author: getArticles_articles_author | null;
 }

@@ -31,31 +31,32 @@ export interface PropsType {
 export default function Hello(props: PropsType) {
   const { loading, data, error } = useQuery<getArticles>(ArticleQuery);
   const [visible, setVisible] = useState(false);
+  const [articleById, setarticleById] = useState<any>({});
   const [confirmLoading, setconfirmLoading] = useState(false);
-const fileList = [
-  {
-    uid: '-1',
-    name: 'xxx.png',
-    status: 'done',
-    url:
-      'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-    thumbUrl:
-      'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-  },
-  {
-    uid: '-2',
-    name: 'yyy.png',
-    status: 'error',
-  },
-];
+  // const fileList = [
+  //   {
+  //     uid: '-1',
+  //     name: 'xxx.png',
+  //     status: 'done',
+  //     url:
+  //       'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+  //     thumbUrl:
+  //       'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+  //   },
+  //   {
+  //     uid: '-2',
+  //     name: 'yyy.png',
+  //     status: 'error',
+  //   },
+  // ];
 
-const props1 = {
-  action: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
-  listType: 'picture',
-  defaultFileList: [...fileList],
-};
-//!!!!
-//https://ant.design/components/form/
+  // const props1 = {
+  //   action: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
+  //   listType: 'picture',
+  //   defaultFileList: [...fileList],
+  // };
+  //!!!!
+  //https://ant.design/components/form/
   const layout = {
     labelCol: { span: 8 },
     wrapperCol: { span: 16 },
@@ -66,8 +67,7 @@ const props1 = {
   const onFinishFailed = () => {
     console.log('onFinish');
   };
-  const tailLayout = {
-  };
+  const tailLayout = {};
   const handleOk = () => {
     console.log('handleOk');
     setconfirmLoading(true);
@@ -76,8 +76,26 @@ const props1 = {
       setconfirmLoading(false);
     }, 2000);
   };
-  const showModal = () => {
-    setVisible(true);
+  const showModal = (id: string) => {
+
+    if (data && data.articles) {
+      
+      const article = data.articles.filter((i) => i && i.id === id)[0];
+      
+      if (article && article.image) {
+        article.fileList=[]
+        article.image = {
+          ...article.image,
+          uid: article.image.id,
+          thumbUrl: `${process.env.REACT_APP_API_URL}${article.image.url}`,
+        };
+        article.fileList = [article.image];
+      }
+       setarticleById(article || {});
+       setVisible(true);
+    } else {
+      //!вызвать тут ошибку
+    }
   };
   if (loading) return <div>Loading</div>;
   if (error) return <h1>{error.message} </h1>;
@@ -96,7 +114,10 @@ const props1 = {
                     style={{ width: 240 }}
                     actions={[
                       <SettingOutlined key="setting" />,
-                      <EditOutlined key="edit" onClick={showModal} />,
+                      <EditOutlined
+                        key="edit"
+                        onClick={() => showModal(article.id)}
+                      />,
                       <EllipsisOutlined key="ellipsis" />,
                     ]}
                     cover={
@@ -139,7 +160,7 @@ const props1 = {
         <Form
           {...layout}
           name="basic"
-          initialValues={{ remember: true }}
+          initialValues={articleById}
           onFinish={onFinish}
           onFinishFailed={onFinishFailed}
         >
@@ -150,8 +171,12 @@ const props1 = {
             <Input.TextArea />
           </Form.Item>
 
-          <Form.Item {...tailLayout} label="Изображение" name="image">
-            <Upload {...(props1 as any)}>
+          <Form.Item
+            {...tailLayout}
+            label="Изображение"
+            name="image"
+          >
+            <Upload fileList={articleById.fileList}>
               <Button>
                 <UploadOutlined /> Загрузить изображение
               </Button>
