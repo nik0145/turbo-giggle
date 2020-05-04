@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { InputID, editArticleInput } from "./../../../__generated__/globalTypes";
+import { InputID, editArticleInput } from "./globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: updateArticle
@@ -13,7 +13,6 @@ export interface updateArticle_updateArticle_article {
   __typename: "Article";
   title: string | null;
   id: string;
-  content: string | null;
 }
 
 export interface updateArticle_updateArticle {

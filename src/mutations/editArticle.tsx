@@ -5,6 +5,7 @@ export default gql`
       article {
         title
         id
+        content
       }
     }
   }

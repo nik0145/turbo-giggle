@@ -7,13 +7,6 @@
 // START Enums and Input Objects
 //==============================================================
 
-export interface ArticleInput {
-  title?: string | null;
-  content?: string | null;
-  image?: string | null;
-  author?: string | null;
-}
-
 export interface InputID {
   id: string;
 }

@@ -2,10 +2,14 @@ import React, { useState } from 'react';
 import { useQuery } from '@apollo/react-hooks';
 import ArticleQ from '../queries/ArticleQuery';
 import editArticleM from '../mutations/editArticle';
+import createArticleM from '../mutations/createArticle';
+import deleteArticleM from '../mutations/deleteArticle';
 import { getArticles } from '../queries/__generated__/getArticles';
 import { useMutation } from '@apollo/react-hooks';
 
 import { updateArticle } from '../mutations/__generated__/updateArticle';
+import { createArticle } from '../mutations/__generated__/createArticle';
+import { deleteArticle } from '../mutations/__generated__/deleteArticle';
 import {
   Modal,
   Typography,
@@ -17,6 +21,7 @@ import {
   Row,
   Form,
   Input,
+  Empty,
 } from 'antd';
 import {
   EditOutlined,
@@ -28,9 +33,12 @@ const { Paragraph } = Typography;
 
 export default function Hello() {
   const { loading, data, error } = useQuery<getArticles>(ArticleQ);
-  const [editArticle] = useMutation<updateArticle, any>(editArticleM);
+  const [onEditArticle] = useMutation<updateArticle, any>(editArticleM);
+  const [onCreateArticle] = useMutation<createArticle, any>(createArticleM);
+  const [onDeleteArticle] = useMutation<deleteArticle, any>(deleteArticleM);
+  
   const [visible, setVisible] = useState(false);
-  const [articleById, setarticleById] = useState<any>({});
+  const [articleById, setArticleById] = useState<any>({});
   const [form] = Form.useForm();
   const [confirmLoading, setconfirmLoading] = useState(false);
 
@@ -40,32 +48,56 @@ export default function Hello() {
     labelCol: { span: 8 },
     wrapperCol: { span: 16 },
   };
-  const onFinish = () => {
-    console.log('onFinish');
+    const onDeleteArticleModal = (id: string) => {
+        Modal.confirm({
+          title: 'Удаление записи',
+          // icon: <ExclamationCircleOutlined />,
+          content: 'Вы правда хотите удалить эту запись?',
+          okText: 'Удалить',
+          cancelText: 'Отмена',
+          onOk() {
+            try {
+              onDeleteArticle({ variables: { where: {id} } });
+              message.success('Запись успешно удалена');
+            } catch (error) {
+              message.error('Ошибка удаления записи');
+            }
+          },
+          onCancel() {
+            return false;
+          },
+        });
+     
   };
   const onFinishFailed = () => {
-    console.log('onFinish');
+    console.log('error');
   };
   const tailLayout = {};
   const handleOk = async () => {
     setconfirmLoading(true);
     try {
-      const data = await form.validateFields();
-      delete data.image;
-      editArticle({ variables: { data, where: { id: articleById.id } } });
-      // console.log(mutationLoading,mutationError)
-      setconfirmLoading(false);
-      setVisible(false);
-      message.success('Запись успешно изменена');
-    } catch (error) {
+          const data = await form.validateFields();
+          delete data.image;
+          //*проверка на не пустой объект articleById
+          if (Object.keys(articleById).length !== 0) {
+            onEditArticle({
+              variables: { data, where: { id: articleById.id } },
+            });
+          } else {
+            onCreateArticle({ variables: { data } });
+          }
+          setconfirmLoading(false);
+          setVisible(false);
+          message.success('Запись успешно изменена');
+        } catch (error) {
        message.error('Ошибка изменения записи');
       setVisible(false);
       setconfirmLoading(false);
     }
   };
-  const showModal = (id: string) => {
+  const showModal = (id?: string) => {
     if (data && data.articles) {
-      const article = data.articles.filter((i) => i && i.id === id)[0];
+      const article: any = data.articles.filter((i) => i && i.id === id)[0];
 
       if (article && article.image) {
         article.fileList = [];
@@ -76,10 +108,10 @@ export default function Hello() {
         };
         article.fileList = [article.image];
       }
-      setarticleById(article || {});
+      setArticleById(article || {});
       setVisible(true);
     } else {
-      //!вызвать тут ошибку
+      message.error('Невозможно редактировать несуществующую запись');
     }
   };
   if (loading) return <div>Loading</div>;
@@ -87,10 +119,17 @@ export default function Hello() {
   if (!data) return <div>no data</div>;
   return (
     <div>
-      <Row gutter={16}>
-        {data &&
-          data.articles &&
-          data.articles.map(
+      <Button
+        style={{ marginBottom: '10px' }}
+        type="primary"
+        onClick={() => showModal()}
+      >
+        Создать запись
+      </Button>
+     
+        {data && data.articles && data.articles.length > 0 ? (
+           <Row gutter={16}>
+         { data.articles.map(
             (article) =>
               article && (
                 <Col key={article.id} span={8}>
@@ -102,7 +141,10 @@ export default function Hello() {
                         key="edit"
                         onClick={() => showModal(article.id)}
                       />,
-                      <DeleteOutlined key="ellipsis" />,
+                      <DeleteOutlined
+                        onClick={() => onDeleteArticleModal(article.id)}
+                        key="ellipsis"
+                      />,
                     ]}
                     cover={
                       article.image && (
@@ -118,17 +160,20 @@ export default function Hello() {
                       description={article.author?.username}
                     />
                     <Paragraph style={{ marginTop: '10px' }}>
-                      ${article.content}
+                      {article.content}
                     </Paragraph>
                   </Card>
                 </Col>
               )
           )}
       </Row>
+        ) : (
+          <Empty description="Отсутствуют данные" />
+        )}
       <Modal
         title="Редактировать"
         visible={visible}
-        onCancel={()=>setVisible(false)}
+        onCancel={() => setVisible(false)}
         footer={[
           <Button
             key="submit"
@@ -146,7 +191,6 @@ export default function Hello() {
           name="basic"
           form={form}
           initialValues={articleById}
-          onFinish={onFinish}
           onFinishFailed={onFinishFailed}
         >
           <Form.Item {...tailLayout} label="Заголовок" name="title">

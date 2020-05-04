@@ -10,12 +10,6 @@ import { loginError, receiveLogin, loginRequest } from '../actions/auth';
 import { Form, Input, Button, Row, Typography } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 const { Text } = Typography;
-// interface ICredentials {
-//   username: string;
-//   password: string;
-// }
-
-
 const setUser = (user: object): any =>
   localStorage.setItem("user", JSON.stringify(user))
 
