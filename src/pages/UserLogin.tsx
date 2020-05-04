@@ -22,7 +22,6 @@ const tailLayout = {
 };
 
 const UserLogin = (props: any) => {
-console.log(props);
   const dispatch = useDispatch();
   const [error, onGetError] = useState('');
 
