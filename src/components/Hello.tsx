@@ -26,48 +26,52 @@ import {
 import {
   EditOutlined,
   UploadOutlined,
-  DeleteOutlined
+  DeleteOutlined,
 } from '@ant-design/icons';
 
 const { Paragraph } = Typography;
 
 export default function Hello() {
-  const { loading, data, error } = useQuery<getArticles>(ArticleQ);
+  //* можно избавиться от refetch, и при удалении и создании добавлять данные в кеш
+  //* https://www.apollographql.com/docs/angular/features/cache-updates/
+  const { loading, data, error, refetch: refetchArticles } = useQuery<getArticles>(
+    ArticleQ
+  );
   const [onEditArticle] = useMutation<updateArticle, any>(editArticleM);
   const [onCreateArticle] = useMutation<createArticle, any>(createArticleM);
   const [onDeleteArticle] = useMutation<deleteArticle, any>(deleteArticleM);
-  
+
   const [visible, setVisible] = useState(false);
   const [articleById, setArticleById] = useState<any>({});
   const [form] = Form.useForm();
   const [confirmLoading, setconfirmLoading] = useState(false);
 
-  //!!!!
-  //https://ant.design/components/form/
   const layout = {
     labelCol: { span: 8 },
     wrapperCol: { span: 16 },
   };
-    const onDeleteArticleModal = (id: string) => {
-        Modal.confirm({
-          title: 'Удаление записи',
-          // icon: <ExclamationCircleOutlined />,
-          content: 'Вы правда хотите удалить эту запись?',
-          okText: 'Удалить',
-          cancelText: 'Отмена',
-          onOk() {
-            try {
-              onDeleteArticle({ variables: { where: {id} } });
-              message.success('Запись успешно удалена');
-            } catch (error) {
-              message.error('Ошибка удаления записи');
-            }
-          },
-          onCancel() {
-            return false;
-          },
-        });
-     
+  const onDeleteArticleModal =  (id: string) => {
+    Modal.confirm({
+      title: 'Удаление записи',
+      // icon: <ExclamationCircleOutlined />,
+      content: 'Вы правда хотите удалить эту запись?',
+      okText: 'Удалить',
+      cancelText: 'Отмена',
+      async onOk() {
+        try {
+          await onDeleteArticle({
+            variables: { where: { id } },
+          });
+           await refetchArticles();
+          message.success('Запись успешно удалена');
+        } catch (error) {
+          message.error('Ошибка удаления записи');
+        }
+      },
+      onCancel() {
+        return false;
+      },
+    });
   };
   const onFinishFailed = () => {
     console.log('error');
@@ -76,21 +80,28 @@ export default function Hello() {
   const handleOk = async () => {
     setconfirmLoading(true);
     try {
-          const data = await form.validateFields();
-          delete data.image;
-          //*проверка на не пустой объект articleById
-          if (Object.keys(articleById).length !== 0) {
-            onEditArticle({
-              variables: { data, where: { id: articleById.id } },
-            });
-          } else {
-            onCreateArticle({ variables: { data } });
-          }
-          setconfirmLoading(false);
-          setVisible(false);
-          message.success('Запись успешно изменена');
-        } catch (error) {
-       message.error('Ошибка изменения записи');
+      const data = await form.validateFields();
+      delete data.image;
+      //*проверка на не пустой объект articleById
+      if (Object.keys(articleById).length !== 0) {
+        await onEditArticle({
+          variables: {
+            data,
+            where: { id: articleById.id },
+          },
+        });
+        //! так же не забудь тут обновить картинку
+      } else {
+        await onCreateArticle({
+          variables: { data },
+        });
+        await refetchArticles();
+      }
+      setconfirmLoading(false);
+      setVisible(false);
+      message.success('Запись успешно изменена');
+    } catch (error) {
+      message.error('Ошибка изменения записи');
       setVisible(false);
       setconfirmLoading(false);
     }
@@ -126,10 +137,10 @@ export default function Hello() {
       >
         Создать запись
       </Button>
-     
-        {data && data.articles && data.articles.length > 0 ? (
-           <Row gutter={16}>
-         { data.articles.map(
+
+      {data && data.articles && data.articles.length > 0 ? (
+        <Row gutter={16}>
+          {data.articles.map(
             (article) =>
               article && (
                 <Col key={article.id} span={8}>
@@ -159,17 +170,21 @@ export default function Hello() {
                       title={article.title}
                       description={article.author?.username}
                     />
-                    <Paragraph style={{ marginTop: '10px' }}>
+                    <Paragraph
+                      style={{
+                        marginTop: '10px',
+                      }}
+                    >
                       {article.content}
                     </Paragraph>
                   </Card>
                 </Col>
               )
           )}
-      </Row>
-        ) : (
-          <Empty description="Отсутствуют данные" />
-        )}
+        </Row>
+      ) : (
+        <Empty description="Отсутствуют данные" />
+      )}
       <Modal
         title="Редактировать"
         visible={visible}
