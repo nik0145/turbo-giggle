@@ -10,7 +10,7 @@ import {
   Modal,
   Typography,
   Upload,
-  // message,
+  message,
   Button,
   Card,
   Col,
@@ -18,12 +18,10 @@ import {
   Form,
   Input,
 } from 'antd';
-import { UploadOutlined } from '@ant-design/icons';
-
 import {
   EditOutlined,
-  EllipsisOutlined,
-  SettingOutlined,
+  UploadOutlined,
+  DeleteOutlined
 } from '@ant-design/icons';
 
 const { Paragraph } = Typography;
@@ -58,8 +56,9 @@ export default function Hello() {
       // console.log(mutationLoading,mutationError)
       setconfirmLoading(false);
       setVisible(false);
+      message.success('Запись успешно изменена');
     } catch (error) {
-      console.log('Validate Failed:', error);
+       message.error('Ошибка изменения записи');
       setVisible(false);
       setconfirmLoading(false);
     }
@@ -99,12 +98,11 @@ export default function Hello() {
                     hoverable
                     style={{ width: 240 }}
                     actions={[
-                      <SettingOutlined key="setting" />,
                       <EditOutlined
                         key="edit"
                         onClick={() => showModal(article.id)}
                       />,
-                      <EllipsisOutlined key="ellipsis" />,
+                      <DeleteOutlined key="ellipsis" />,
                     ]}
                     cover={
                       article.image && (
@@ -130,6 +128,7 @@ export default function Hello() {
       <Modal
         title="Редактировать"
         visible={visible}
+        onCancel={()=>setVisible(false)}
         footer={[
           <Button
             key="submit"

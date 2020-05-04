@@ -16,6 +16,7 @@ export interface PropsType {
   path: string;
   component: any;
   children?: any;
+  location: any;
   routes: {
     name: string;
     path: string;
@@ -29,13 +30,18 @@ const BasicLayout = ({ component: Component, routes, ...rest }: PropsType) => {
     <Layout style={{ minHeight: '100vh' }}>
       <Sider collapsible collapsed={collapsed} onCollapse={setCollapsed}>
         <div className="logo">turbo-giggle</div>
-        <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
-          <Menu.Item key="1">
+        <Menu
+          theme="dark"
+          defaultSelectedKeys={[rest.location.pathname]}
+          mode="inline"
+        >
+          <Menu.Item key="/">
             <PieChartOutlined />
             <span>Home</span>
+
             <Link to="/" />
           </Menu.Item>
-          <Menu.Item key="2">
+          <Menu.Item key="/hello">
             <PieChartOutlined />
             <span>Hello</span>
             <Link to="/hello" />

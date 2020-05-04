@@ -1,17 +1,17 @@
 import React from 'react'
-import { Layout, Anchor } from 'antd'
+import { Layout } from 'antd'
 const Footer = () => {
   return (
     <Layout.Footer style={{ textAlign: 'center' }}>
-      <Anchor>
-        <Anchor.Link
-          title="https://github.com/nik0145/turbo-giggle"
-          target="_blank"
-          href="https://github.com/nik0145/turbo-giggle"
-        ></Anchor.Link>
-      </Anchor>
+      <a
+        target="_blank"
+        rel="noopener noreferrer"
+        href="https://github.com/nik0145/turbo-giggle"
+      >
+        https://github.com/nik0145/turbo-giggle
+      </a>
     </Layout.Footer>
-  )
+  );
 }
 
 export default Footer

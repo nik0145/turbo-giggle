@@ -64,7 +64,7 @@ const routes = [
       {
         name: "Home",
         path: "/",
-        exact: false,
+        exact: true,
         authority:["user"],
         component: Home,
       },
