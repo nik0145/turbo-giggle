@@ -1,5 +1,7 @@
 import React from "react";
 import "./App.css";
+import { ApolloProvider } from '@apollo/react-components';
+import client from './utils/apolloClient';
 import {
   BrowserRouter as Router,
   // Link,
@@ -7,7 +9,8 @@ import {
   // Redirect
 } from "react-router-dom";
 import routes from "./routes/routes";
-
+import { Provider } from 'react-redux';
+import store from './store';
 
 import RouteSubWrapper from "./routes/RouteSubWrapper";
 // !решил блин выучить typescript
@@ -34,14 +37,18 @@ import RouteSubWrapper from "./routes/RouteSubWrapper";
 
 const App: React.FC = ()=> {
     return (
-      <Router>
-        <Switch>
-          {routes.map((route) => (
-            <RouteSubWrapper key={route.name} {...route} />
-          ))}
-        </Switch>
-      </Router>
-    )
+      <Provider store={store}>
+        <ApolloProvider client={client}>
+          <Router>
+            <Switch>
+              {routes.map((route) => (
+                <RouteSubWrapper key={route.name} {...route} />
+              ))}
+            </Switch>
+          </Router>
+        </ApolloProvider>
+      </Provider>
+    );
 }
 
 export default App;
