@@ -76,12 +76,38 @@ export default function Hello() {
   const onFinishFailed = () => {
     console.log('error');
   };
+  const propsUpload = {
+    beforeUpload: (file: any) => {
+      setArticleById({...articleById,fileList:[...articleById.fileList,file]});
+      return false;
+    },
+  };
   const tailLayout = {};
+  const  handleUpload = (a: any) => {
+    console.log(a)
+    // const formData = new FormData();
+  }
   const handleOk = async () => {
     setconfirmLoading(true);
     try {
       const data = await form.validateFields();
+      console.log(data);
+      const formData = new FormData();
+      formData.append('files', data.image.file, `${data.image.file.name}`);
+      formData.append('refId', articleById.id);
+      formData.append('ref', 'article');
+      formData.append('field', 'image');
       delete data.image;
+      // const response = await fetch(`${process.env.REACT_APP_API_URL}upload`, {
+      await fetch(`${process.env.REACT_APP_API_URL}upload`, {
+        method: 'POST',
+        headers: {
+          //!нужно написать для авторизованных юзеров
+        },
+        body: formData,
+      });
+      // const kek = await response.json()
+      // console.log('kek', kek);
       //*проверка на не пустой объект articleById
       if (Object.keys(articleById).length !== 0) {
         await onEditArticle({
@@ -216,8 +242,8 @@ export default function Hello() {
           </Form.Item>
 
           <Form.Item {...tailLayout} label="Изображение" name="image">
-            <Upload fileList={articleById.fileList}>
-              <Button>
+            <Upload {...propsUpload} fileList={articleById.fileList}>
+              <Button type="primary" onClick={()=>handleUpload}>
                 <UploadOutlined /> Загрузить изображение
               </Button>
             </Upload>
