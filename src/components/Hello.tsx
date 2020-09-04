@@ -78,7 +78,7 @@ export default function Hello() {
   };
   const propsUpload = {
     beforeUpload: (file: any) => {
-      setArticleById({...articleById,fileList:[...articleById.fileList,file]});
+      setArticleById({...articleById,fileList:[...(articleById.fileList || []),file]});
       return false;
     },
   };
@@ -90,36 +90,41 @@ export default function Hello() {
   const handleOk = async () => {
     setconfirmLoading(true);
     try {
-      const data = await form.validateFields();
+      const dataForm = await form.validateFields();
       console.log(data);
+      console.log('articleById', articleById);
       const formData = new FormData();
-      formData.append('files', data.image.file, `${data.image.file.name}`);
-      formData.append('refId', articleById.id);
-      formData.append('ref', 'article');
-      formData.append('field', 'image');
-      delete data.image;
+      if (dataForm.image && dataForm.image.file) {
+        formData.append('files', dataForm.image.file, `${dataForm.image.file.name}`);
+        formData.append('refId', articleById.id);
+        formData.append('ref', 'article');
+        formData.append('field', 'image');
+        delete dataForm.image;
+             await fetch(`${process.env.REACT_APP_API_URL}upload`, {
+               method: 'POST',
+               headers: {
+                 //!нужно написать для авторизованных юзеров
+               },
+               body: formData,
+             });
+      }
+   
       // const response = await fetch(`${process.env.REACT_APP_API_URL}upload`, {
-      await fetch(`${process.env.REACT_APP_API_URL}upload`, {
-        method: 'POST',
-        headers: {
-          //!нужно написать для авторизованных юзеров
-        },
-        body: formData,
-      });
+ 
       // const kek = await response.json()
       // console.log('kek', kek);
       //*проверка на не пустой объект articleById
       if (Object.keys(articleById).length !== 0) {
         await onEditArticle({
           variables: {
-            data,
+            dataForm,
             where: { id: articleById.id },
           },
         });
         //! так же не забудь тут обновить картинку
       } else {
         await onCreateArticle({
-          variables: { data },
+          variables: { dataForm },
         });
         await refetchArticles();
       }
@@ -127,6 +132,7 @@ export default function Hello() {
       setVisible(false);
       message.success('Запись успешно изменена');
     } catch (error) {
+      console.log('error',error);
       message.error('Ошибка изменения записи');
       setVisible(false);
       setconfirmLoading(false);
@@ -134,19 +140,26 @@ export default function Hello() {
   };
   const showModal = (id?: string) => {
     if (data && data.articles) {
-      const article: any = data.articles.filter((i) => i && i.id === id)[0];
+      if (id) {
+          const article: any = data.articles.filter((i) => i && i.id === id)[0];
 
-      if (article && article.image) {
-        article.fileList = [];
-        article.image = {
-          ...article.image,
-          uid: article.image.id,
-          thumbUrl: `${process.env.REACT_APP_API_URL}${article.image.url}`,
-        };
-        article.fileList = [article.image];
+          if (article && article.image) {
+            article.fileList = [];
+            article.image = {
+              ...article.image,
+              uid: article.image.id,
+              thumbUrl: `${process.env.REACT_APP_API_URL}${article.image.url}`,
+            };
+            article.fileList = [article.image];
+          }
+         
+          setArticleById(article || {});
+      }else{
+       setArticleById({});
       }
-      setArticleById(article || {});
-      setVisible(true);
+       setVisible(true);
+        
+
     } else {
       message.error('Невозможно редактировать несуществующую запись');
     }
@@ -159,7 +172,7 @@ export default function Hello() {
       <Button
         style={{ marginBottom: '10px' }}
         type="primary"
-        onClick={() => showModal()}
+        onClick={() => {form.resetFields();showModal()}}
       >
         Создать запись
       </Button>
@@ -214,7 +227,9 @@ export default function Hello() {
       <Modal
         title="Редактировать"
         visible={visible}
-        onCancel={() => setVisible(false)}
+        onCancel={() => {setVisible(false);    form.resetFields();
+
+        }}
         footer={[
           <Button
             key="submit"
