@@ -13,7 +13,6 @@ export default gql`
       }
       author {
         id
-        email
         username
       }
     }

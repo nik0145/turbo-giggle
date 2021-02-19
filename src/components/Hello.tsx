@@ -139,6 +139,7 @@ export default function Hello() {
     }
   };
   const showModal = (id?: string) => {
+    console.log('showModal',id)
     if (data && data.articles) {
       if (id) {
           const article: any = data.articles.filter((i) => i && i.id === id)[0];
